@@ -40,12 +40,18 @@ export const store = {
     // Impedir que se edite mas de un evento a la vez
     this.resetEditOfAllEvents()
 
-    // El evento pertenece a un determinado día. Por tanto, hay que localizarlo
-    const dayObj = this.state.seedData.find(day => day.id === dayId)
-    // Un dia puede tener asociado muchos eventos. Por lo que es necesario buscar.
-    const eventObj = dayObj.events.find(event => event.details === eventDetails)
-    // Establecer el evento en modo edición
+    // Localizamos el evento a editar.
+    const eventObj = this.getEventObj(dayId, eventDetails)
+    // Establecer el evento en modo edición (esto cambia la UI a modo editar)
     eventObj.edit = true;
+  },
+  updateEvent(dayId, originalEventDetails, newEventDetails) {
+    // Localizamos el evento a actualizar
+    const eventObj = this.getEventObj(dayId, originalEventDetails)
+    // Establecer los nuevos detalles del evento
+    eventObj.details = newEventDetails
+    // Desactivar el modo edición (esto cambia la UI a modo ver detalles del evento)
+    eventObj.edit = false
   },
   resetEditOfAllEvents() {
     // Solo permitimos la edición de un evento a la vez, por tanto es necesario establecer en false el modo de edición de todos los eventos antes de comenzar a editar uno en particular
@@ -54,5 +60,15 @@ export const store = {
         event.edit = false
       })
     })
-  }
+  },
+  getEventObj(dayId, eventDetails) {
+    // Metodo auxiliar para localizar eventos. evita codigo D.R.Y (edit | update)
+
+    // Buscar el día en que se encuentra registrado el evento a localizar
+    const dayObj = this.state.seedData.find(day => day.id === dayId)
+    // Buscar el evento especifico a localizar
+    const eventObj = dayObj.events.find(event => event.details === eventDetails)
+    // Retornar el evento localizado
+    return eventObj
+  },
 } 

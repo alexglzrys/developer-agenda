@@ -10,13 +10,14 @@
           <i class="fa fa-trash-o delete-icon"></i>
         </div>
       </template>
-      
+
       <!-- Si el evento esta en modo edición, mostrar la UI para editar el evento -->
       <template v-if="event.edit">
-        <!-- El placeholder debe mostrar los detalles originales del evento -->
-        <input type="text" :placeholder="event.details">
+        <!-- El placeholder debe mostrar los detalles originales del evento, además la entrada la debemos vincular con alguna propiedad del modelo para que exista un enlace bidireccional de datos -->
+        <input type="text" v-model="newEventDetails" :placeholder="event.details">
         <div class="has-text-centered icons">
-          <i class="fa fa-check"></i>
+          <!-- Actualizar los detalles del evento requiere que se conozca el día, los detalles actuales y los nuevos detalles (actualización) -->
+          <i class="fa fa-check" @click="updateEvent(day.id, event.details, newEventDetails)"></i>
         </div>
       </template>
     </div>
@@ -31,6 +32,12 @@ export default {
   name: 'CalendarEvent',
   // Este componente necesita información desde el exterior (datos del evento a proyectar, así como el día en el que se encuentra registrado)
   props: ['event', 'day'],
+  data() {
+    // Vue no puede detectar la adición/eliminación de propiedades de datos. Esta limitación es la razón por la cual una propiedad a menudo debe inicializarse en el objeto de datos para que se considere reactiva.
+    return {
+      newEventDetails: '',
+    }
+  },
   computed: {
     // Retornar un color de fondo aleatorio para cada evento
     getEventBackgroundColor() {
@@ -43,6 +50,14 @@ export default {
     editEvent(dayId, eventDetails) {
       // Despachador que invoca una mutación en el store para permitir editar el evento
       store.editEvent(dayId, eventDetails)
+    },
+    updateEvent(dayId, originalEventDetails, updatedEventDetails) {
+      // Si los nuevos detalles del evento están vacíos, asumimos que el usuario desea mantener los detalles originales del evento
+      if (updatedEventDetails === '') updatedEventDetails = originalEventDetails
+
+      // Despachar una acción de mutación significa no tener lógica declarada del estado aqui, toda esa logica la implementa el metodo de mutación definido en el store
+      store.updateEvent(dayId, originalEventDetails, updatedEventDetails)
+      this.newEventDetails = ''
     }
   },
 }
