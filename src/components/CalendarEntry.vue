@@ -1,10 +1,16 @@
 <template>
   <div id="calendar-entry">
     <div class="calendar-entry-note">
-      <input type="text" placeholder="Nuevo Evento" />
+      <!-- v-model se utiliza para crear un enlace de datos bidireccional entre la entrada del formulario (control) y una propiedad de datos (modelo) del componente - basicamente a medida que uno cambia, el otro se actualiza -->
+      <input type="text" v-model="inputEntry" placeholder="Nuevo Evento" />
       <p class="calendar-entry-day">Día del evento: <span class="bold">{{ titleOfActiveDay }}</span></p>
-      <a class="button is-primary is-small is-outlined">Registrar</a>
+      <!-- cuando se hace click, se ejecuta un metodo que recibe como parametro la propiedad de datos inputEntry que contiene los detalles del evento (lo que el usuario ingresó en la caja de texto) -->
+      <a class="button is-primary is-small is-outlined" @click="submitEvent(inputEntry)">Registrar</a>
     </div>
+    <!-- Mostrar feedback de error al usuario al tratar de enviar un evento vacío -->
+    <p v-if="error" style="color: red; font-size: 13px">
+      Ingresa los detalles del evento!
+    </p>
   </div>
 </template>
 
@@ -14,6 +20,24 @@ import {store} from '../store'
 
 export default {
   name: 'CalendarEntry',
+  data() {
+    return {
+      inputEntry: '',
+      error: false,
+    }
+  },
+  methods: {
+    submitEvent(eventDetails) {
+      // Evitar que se registre un evento con detalles vacíos
+      if (eventDetails === '') return this.error = true
+
+      // Despacharemos una mutación definida en el store, la cual recibe los detalles del evento para registrarlo en el dia previamente seleccionado
+      store.submitEvent(eventDetails)
+      this.inputEntry = ''
+      // Reseteamos el error (en caso de haberse registrado uno antes del proceso exitoso)
+      this.error = false
+    }
+  },
   computed: {
     // Obtenemos el titulo completo del dia activo
     titleOfActiveDay() {

@@ -22,5 +22,16 @@ export const store = {
     this.state.seedData.map(dayObj => {
       dayObj.id === dayId ? dayObj.active = true : dayObj.active = false
     })
-  }
+  },
+  submitEvent(eventDetails) {
+    // Obtener el objeto dia activo para inyectarle un nuevo evento
+    const activeDay = this.getActiveDay()
+    // Generar la estructura del objeeto evento
+    const event = {
+      details: eventDetails,
+      edit: false,
+    }
+    // Agregarlo al array de eventos de dicho dia seleccionado
+    activeDay.events.push(event)
+  },
 } 
