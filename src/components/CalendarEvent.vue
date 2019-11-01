@@ -6,8 +6,9 @@
         <span class="has-text-centered details">{{ event.details }}</span> 
         <div class="has-text-centered icons">
           <!-- Editar un evento requiere indicar el día en que fue registrado así como los detalles asociados-->
-          <i class="fa fa-pencil-square edit-icon" @click="editEvent(day.id, event.details)"></i> 
-          <i class="fa fa-trash-o delete-icon"></i>
+          <i class="fa fa-pencil-square edit-icon" @click="editEvent(day.id, event.details)"></i>
+          <!-- Eliminar un evento requiere indicar el día en que fue registrado así como los detalles asociados para localizarlo -->
+          <i class="fa fa-trash-o delete-icon" @click="deleteEvent(day.id, event.details)"></i>
         </div>
       </template>
 
@@ -58,7 +59,10 @@ export default {
       // Despachar una acción de mutación significa no tener lógica declarada del estado aqui, toda esa logica la implementa el metodo de mutación definido en el store
       store.updateEvent(dayId, originalEventDetails, updatedEventDetails)
       this.newEventDetails = ''
-    }
+    },
+    deleteEvent(dayId, eventDetails) {
+      store.deleteEvent(dayId, eventDetails)
+    },
   },
 }
 </script>
@@ -73,6 +77,10 @@ export default {
 
     .details {
       display: block;
+    }
+
+    .icons i {
+      margin: 0 2px;
     }
 
     input {

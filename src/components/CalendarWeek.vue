@@ -26,6 +26,8 @@ export default {
   data() {
     return {
       // hacer referencia al estado de la tienda como una propiedad de datos compartida en el componente
+      
+      // Lo ideal sería que el estado se construyera con base a una consulta al servidor (API). y tras cualquier cambio, Vue notifique al servidor sobre que mutaciones se deben realizar. (esto nos daría persistencia, en lugar de hacer referencia a datos estáticos)
       sharedState: store.state
     }
   }
