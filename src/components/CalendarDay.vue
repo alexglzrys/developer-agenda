@@ -1,5 +1,6 @@
 <template>
-  <div class="day column">
+  <!-- Registramos un listener @click para detectar la interacción del usuario al hacer click en un día en particular -->
+  <div class="day column" @click="setActiveDay(day.id)">
     <div class="day-banner has-text-white has-text-centered">{{ day.abbvTitle }}</div>
     <div class="day-details">
       <div class="day-number">{{ day.id }}</div>
@@ -17,6 +18,9 @@
 // Importar componentes hijos
 import CalendarEvent from './CalendarEvent.vue'
 
+// Importamos el store, ya que este componente necesita acceder a el para consultar información o mutarla a través del despacho de eventos
+import {store} from '../store'
+
 export default {
   name: 'CalendarDay',
   // Este componente necesita información desde el exterior (datos del dia a mostrar)
@@ -24,6 +28,12 @@ export default {
   // Registrar componentes hijos
   components: {
     CalendarEvent
+  },
+  methods: {
+    setActiveDay(dayId) {
+      // Mutamos el state para establecer el dia clickeado como activo
+      store.setActiveDay(dayId)
+    }
   }
 }
 </script>

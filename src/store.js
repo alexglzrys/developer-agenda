@@ -8,5 +8,19 @@ import { seedData } from './seedData'
 export const store = {
   state: {
     seedData
+  },
+  // Todas las acciones que mutan el estado siempre deben estar definidas dentro del store (centralizadas para evitar sobre-escribir su logica)
+
+  // La activación de estas acciones, depende de los eventos despachados en los componentes
+  getActiveDay() {
+    // Devolvemos el primer objeto dia (elemento del array) activo 
+    return this.state.seedData.find(day => day.active)
+  },
+  setActiveDay(dayId) {
+    // Mapeamos todo el estado (arreglo) de nuestra app. 
+    // Establecemos la propiedad active a true si el id del objeto actual coincide con el id del dia seleccionado, en caso contrario, dicha propiedad la seteamos en false
+    this.state.seedData.map(dayObj => {
+      dayObj.id === dayId ? dayObj.active = true : dayObj.active = false
+    })
   }
 } 

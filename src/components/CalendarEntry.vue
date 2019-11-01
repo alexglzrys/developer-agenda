@@ -1,16 +1,25 @@
 <template>
   <div id="calendar-entry">
     <div class="calendar-entry-note">
-      <input type="text" placeholder="New Event" />
-      <p class="calendar-entry-day">Day of event: <span class="bold">Monday</span></p>
-      <a class="button is-primary is-small is-outlined">Submit</a>
+      <input type="text" placeholder="Nuevo Evento" />
+      <p class="calendar-entry-day">Día del evento: <span class="bold">{{ titleOfActiveDay }}</span></p>
+      <a class="button is-primary is-small is-outlined">Registrar</a>
     </div>
   </div>
 </template>
 
 <script>
+// Importamos el store, ya que este componente necesita tener acceso a el, sea para consultar o despachar eventos que muten la información almacenada
+import {store} from '../store'
+
 export default {
   name: 'CalendarEntry',
+  computed: {
+    // Obtenemos el titulo completo del dia activo
+    titleOfActiveDay() {
+      return store.getActiveDay().fullTitle
+    }
+  }
 }
 </script>
 
