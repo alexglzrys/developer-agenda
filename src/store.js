@@ -34,4 +34,25 @@ export const store = {
     // Agregarlo al array de eventos de dicho dia seleccionado
     activeDay.events.push(event)
   },
+  editEvent(dayId, eventDetails) {
+    // El objetivo es permitir que el usuario cambie el valor booleano de edición del evento de falso a verdadero.
+
+    // Impedir que se edite mas de un evento a la vez
+    this.resetEditOfAllEvents()
+
+    // El evento pertenece a un determinado día. Por tanto, hay que localizarlo
+    const dayObj = this.state.seedData.find(day => day.id === dayId)
+    // Un dia puede tener asociado muchos eventos. Por lo que es necesario buscar.
+    const eventObj = dayObj.events.find(event => event.details === eventDetails)
+    // Establecer el evento en modo edición
+    eventObj.edit = true;
+  },
+  resetEditOfAllEvents() {
+    // Solo permitimos la edición de un evento a la vez, por tanto es necesario establecer en false el modo de edición de todos los eventos antes de comenzar a editar uno en particular
+    this.state.seedData.map(dayObj => {
+      dayObj.events.map(event => {
+        event.edit = false
+      })
+    })
+  }
 } 
