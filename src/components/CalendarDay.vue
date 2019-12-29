@@ -40,7 +40,7 @@ export default {
 
 <style lang="scss" scoped>
   .day {
-    background-color: #4A4A4A;
+    background-color: #00675b;
     color: #FFF;
     border-left: 1px solid #8F8F8F;
     border-bottom: 1px solid #8F8F8F;
@@ -48,7 +48,7 @@ export default {
     cursor: pointer;
 
     &:hover {
-      background: darken(#4A4A4A,3%);
+      background: darken(#009688,3%);
     }
 
     .day-banner {

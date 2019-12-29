@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <!-- Al dividir nuestra aplicación en componentes, ayuda a adelgazar la lógica y marcado HTML en el componente principal -->
+    <calendar-title />
     <calendar-week />
     <calendar-entry />
   </div>
@@ -10,6 +11,7 @@
 // Importar los componentes hijos directos de App.vue
 import CalendarWeek from './components/CalendarWeek.vue'
 import CalendarEntry from './components/CalendarEntry.vue'
+import CalendarTitle from './components/CalendarTitle.vue'
 
 export default {
   // Asignar un nombre a este componente
@@ -18,6 +20,7 @@ export default {
   components: {
     CalendarWeek,
     CalendarEntry,
+    CalendarTitle,
   },
 }
 </script>
@@ -32,8 +35,8 @@ export default {
 <!-- Declarar los estilos de este componente -->
 <style lang="scss" scoped>
   #app {
-    height: inherit;
-    background: #6e6e6e;
+    min-height: 100vh;
+    background: #48a999;
     display: flex;
     flex-direction: column;
     align-items: center;

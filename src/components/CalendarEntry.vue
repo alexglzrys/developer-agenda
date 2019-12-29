@@ -2,7 +2,7 @@
   <div id="calendar-entry">
     <div class="calendar-entry-note">
       <!-- v-model se utiliza para crear un enlace de datos bidireccional entre la entrada del formulario (control) y una propiedad de datos (modelo) del componente - basicamente a medida que uno cambia, el otro se actualiza -->
-      <input type="text" v-model="inputEntry" placeholder="Nuevo Evento" />
+      <input type="text" v-model="inputEntry" placeholder="Ingrese un nuevo evento" />
       <p class="calendar-entry-day">Día del evento: <span class="bold">{{ titleOfActiveDay }}</span></p>
       <!-- cuando se hace click, se ejecuta un metodo que recibe como parametro la propiedad de datos inputEntry que contiene los detalles del evento (lo que el usuario ingresó en la caja de texto) -->
       <a class="button is-primary is-small is-outlined" @click="submitEvent(inputEntry)">Registrar</a>
@@ -52,8 +52,8 @@ export default {
   background: #FFF;
   border: 1px solid #42b883;
   border-radius: 10px;
-  max-width: 300px;
-  margin: 0 auto;
+  max-width: 380px;
+  margin: 10px auto 20px;
   padding: 20px;
 
   .calendar-entry-note {
